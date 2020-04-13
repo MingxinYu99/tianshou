@@ -73,7 +73,7 @@ def test_gpmlp(args=get_args()):
         target = torch.FloatTensor([0,0,1,0,0])
         c = (obs - target)**2
         c = -c.sum(dim=1)
-        return -c.exp()
+        return -(c / (0.6 ** 2)).exp()
 
     # log
     writer = SummaryWriter(args.logdir + '/' + 'gpmlp')

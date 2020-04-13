@@ -47,7 +47,8 @@ class GPDynamicsModel(torch.nn.Module):
         # get 10 random points as placeholder
         self.train_data = Batch(input=torch.rand(
             data_size, int(np.prod(observation_shape) + np.prod(action_shape))),
-            output=torch.rand(data_size, int(np.prod(observation_shape))))
+            output=torch.rand(data_size, int(np.prod(observation_shape))),
+            mean=None, std=None)
         self.gp = ExactGPModel(
             self.train_data.input,
             self.train_data.output,
@@ -90,6 +91,9 @@ class GPDynamicsModel(torch.nn.Module):
         X = np.concatenate([data.obs, data.act], axis=-1)
         Y = data.obs_next - data.obs
         X = torch.tensor(X, dtype=torch.float, device=self.device)
+        self.train_data.mean = X.mean()
+        self.train_data.std = X.std()
+        X = (X - self.train_data.mean)/self.train_data.std
         Y = torch.tensor(Y, dtype=torch.float, device=self.device)
         self.gp.set_train_data(X, Y, strict=False)
         self.train_data.input = X
@@ -97,6 +101,7 @@ class GPDynamicsModel(torch.nn.Module):
 
     def forward(self, obs, act):
         gp_input = torch.cat([obs, act], dim=1)
+        gp_input = (gp_input - self.train_data.mean)/self.train_data.std
         self.gp.eval()
         self.likelihood.eval()
         with gpytorch.settings.fast_pred_var():

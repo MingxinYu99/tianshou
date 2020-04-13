@@ -122,11 +122,10 @@ class GP_MLPPolicy(BasePolicy):
         return Batch(act=logits, state=h)
 
     def learn(self, batch, batch_size=None, repeat=1, **kwargs):
-        model_losses, actor_losses = [], []
+        model_losses, actor_losses, model_mse = [], [], []
         # train dynamic model
         self.model.collect_data(batch)
         m_loss = self.model.optimize(repeat=20)
-
         for _ in range(repeat):
             a_loss = 0
             obs_next = torch.tensor(
@@ -145,11 +144,19 @@ class GP_MLPPolicy(BasePolicy):
             actor_losses.append(a_loss.item())
             model_losses.append(m_loss.item())
 
+        obs = torch.tensor(batch.obs, dtype=torch.float,
+                            device=self.model.device)
+        obs_next = torch.tensor(batch.obs_next, dtype=torch.float,
+                            device=self.model.device)
+        act = torch.tensor(batch.act, dtype=torch.float,
+                            device=self.model.device)
+        model_error = abs((self.model(obs, act) - obs_next)/obs_next).data.cpu().mean()
         self._plot(np.array(real_obs), np.array(predict_obs))
         self.sync_weight()
         return {
             'loss/actor': actor_losses,
             'loss/model': model_losses,
+            'error/model': model_error,
         }
 
     def _plot(self, real_obs, predict_obs):
