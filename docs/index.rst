@@ -16,6 +16,7 @@ Welcome to Tianshou!
 * :class:`~tianshou.policy.PPOPolicy` `Proximal Policy Optimization <https://arxiv.org/pdf/1707.06347.pdf>`_
 * :class:`~tianshou.policy.TD3Policy` `Twin Delayed DDPG <https://arxiv.org/pdf/1802.09477.pdf>`_
 * :class:`~tianshou.policy.SACPolicy` `Soft Actor-Critic <https://arxiv.org/pdf/1812.05905.pdf>`_
+* :class:`~tianshou.policy.ImitationPolicy`
 
 
 Tianshou supports parallel workers for all algorithms as well. All of these algorithms are reformatted as replay-buffer based algorithms.
@@ -42,6 +43,7 @@ After installation, open your python console and type
 
 If no error occurs, you have successfully installed Tianshou.
 
+Tianshou is still under development, you can also check out the documents in stable version through `tianshou.readthedocs.io/en/stable/ <https://tianshou.readthedocs.io/en/stable/>`_.
 
 .. toctree::
    :maxdepth: 1
@@ -49,8 +51,8 @@ If no error occurs, you have successfully installed Tianshou.
 
    tutorials/dqn
    tutorials/concepts
-   tutorials/tabular
    tutorials/trick
+   tutorials/cheatsheet
 
 .. toctree::
    :maxdepth: 1
@@ -68,6 +70,7 @@ If no error occurs, you have successfully installed Tianshou.
    :caption: Community
 
    contributing
+   contributor
 
 
 Indices and tables

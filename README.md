@@ -6,7 +6,7 @@
 
 [![PyPI](https://img.shields.io/pypi/v/tianshou)](https://pypi.org/project/tianshou/)
 [![Unittest](https://github.com/thu-ml/tianshou/workflows/Unittest/badge.svg?branch=master)](https://github.com/thu-ml/tianshou/actions)
-[![codecov](https://codecov.io/gh/thu-ml/tianshou/graph/badge.svg)](https://codecov.io/gh/thu-ml/tianshou)
+[![codecov](https://img.shields.io/codecov/c/gh/thu-ml/tianshou)](https://codecov.io/gh/thu-ml/tianshou)
 [![Documentation Status](https://readthedocs.org/projects/tianshou/badge/?version=latest)](https://tianshou.readthedocs.io)
 [![GitHub issues](https://img.shields.io/github/issues/thu-ml/tianshou)](https://github.com/thu-ml/tianshou/issues)
 [![GitHub stars](https://img.shields.io/github/stars/thu-ml/tianshou)](https://github.com/thu-ml/tianshou/stargazers)
@@ -25,6 +25,7 @@
 - [Proximal Policy Optimization (PPO)](https://arxiv.org/pdf/1707.06347.pdf)
 - [Twin Delayed DDPG (TD3)](https://arxiv.org/pdf/1802.09477.pdf)
 - [Soft Actor-Critic (SAC)](https://arxiv.org/pdf/1812.05905.pdf)
+- Vanilla Imitation Learning
 
 Tianshou supports parallel workers for all algorithms as well. All of these algorithms are reformatted as replay-buffer based algorithms. Our team is working on supporting more algorithms and more scenarios on Tianshou in this period of development.
 
@@ -57,9 +58,9 @@ If no error occurs, you have successfully installed Tianshou.
 
 ## Documentation
 
-The tutorials and API documentation are hosted on [tianshou.readthedocs.io](https://tianshou.readthedocs.io).
+The tutorials and API documentation are hosted on [tianshou.readthedocs.io](https://tianshou.readthedocs.io/).
 
-The example scripts are under [test/](https://github.com/thu-ml/tianshou/blob/master/test) folder and [examples/](https://github.com/thu-ml/tianshou/blob/master/examples) folder.
+The example scripts are under [test/](https://github.com/thu-ml/tianshou/blob/master/test) folder and [examples/](https://github.com/thu-ml/tianshou/blob/master/examples) folder. It may fail to run with PyPI installation, so please re-install the github version through `pip3 install git+https://github.com/thu-ml/tianshou.git@master`.
 
 <!-- 这里有一份天授平台简短的中文简介：https://www.zhihu.com/question/377263715 -->
 
@@ -112,8 +113,8 @@ Check out the [GitHub Actions](https://github.com/thu-ml/tianshou/actions) page 
 We decouple all of the algorithms into 4 parts:
 
 - `__init__`: initialize the policy;
+- `forward`: to compute actions over given observations;
 - `process_fn`: to preprocess data from replay buffer (since we have reformulated all algorithms to replay-buffer based algorithms);
-- `__call__`: to compute actions over given observations;
 - `learn`: to learn from a given batch data.
 
 Within these API, we can interact with different policies conveniently.
@@ -249,17 +250,11 @@ You can check out the [documentation](https://tianshou.readthedocs.io) for advan
 
 ## Contributing
 
-Tianshou is still under development. More algorithms and features are going to be added and we always welcome contributions to help make Tianshou better. If you would like to contribute, please check out [CONTRIBUTING.md](https://github.com/thu-ml/tianshou/blob/master/CONTRIBUTING.md).
+Tianshou is still under development. More algorithms and features are going to be added and we always welcome contributions to help make Tianshou better. If you would like to contribute, please check out [docs/contributing.rst](https://github.com/thu-ml/tianshou/blob/master/docs/contributing.rst).
 
 ## TODO
 
-- [ ] More examples on [mujoco, atari] benchmark
-- [ ] More algorithms
-- [ ] Prioritized replay buffer
-- [x] RNN support
-- [ ] Imitation Learning
-- [ ] Multi-agent
-- [ ] Distributed training
+Check out the [Issue/PR Categories](https://github.com/thu-ml/tianshou/projects/2) and [Support Status](https://github.com/thu-ml/tianshou/projects/3) page for more detail.
 
 ## Citing Tianshou
 

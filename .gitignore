@@ -141,5 +141,10 @@ flake8.sh
 log/
 MUJOCO_LOG.TXT
 *.pth
+<<<<<<< HEAD
 .vscode/settings.json
 .vscode/launch.json
+=======
+.vscode/
+.DS_Store
+>>>>>>> 7b65d433946a6d49f8b14b4ae3521c40814bf454

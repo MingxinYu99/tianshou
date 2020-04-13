@@ -11,7 +11,7 @@ class BasePolicy(ABC, nn.Module):
 
     * :meth:`~tianshou.policy.BasePolicy.__init__`: initialize the policy, \
         including coping the target network and so on;
-    * :meth:`~tianshou.policy.BasePolicy.__call__`: compute action with given \
+    * :meth:`~tianshou.policy.BasePolicy.forward`: compute action with given \
         observation;
     * :meth:`~tianshou.policy.BasePolicy.process_fn`: pre-process data from \
         the replay buffer (this function can interact with replay buffer);
@@ -30,8 +30,8 @@ class BasePolicy(ABC, nn.Module):
         the network might be ``(mu, sigma), state`` for Gaussian policy.
 
     Since :class:`~tianshou.policy.BasePolicy` inherits ``torch.nn.Module``,
-    you can operate :class:`~tianshou.policy.BasePolicy` almost the same as
-    ``torch.nn.Module``, for instance, load and save the model:
+    you can use :class:`~tianshou.policy.BasePolicy` almost the same as
+    ``torch.nn.Module``, for instance, loading and saving the model:
     ::
 
         torch.save(policy.state_dict(), 'policy.pth')
@@ -48,7 +48,7 @@ class BasePolicy(ABC, nn.Module):
         return batch
 
     @abstractmethod
-    def __call__(self, batch, state=None, **kwargs):
+    def forward(self, batch, state=None, **kwargs):
         """Compute action over the given batch data.
 
         :return: A :class:`~tianshou.data.Batch` which MUST have the following\
